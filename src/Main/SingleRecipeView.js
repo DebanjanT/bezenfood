@@ -41,20 +41,20 @@ const SingleRecipeView = () => {
         <>
           <div className="py-16 bg-white">
             <div className="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+              <div className="md:w-5/12 lg:w-5/12 mx-auto">
+                <img
+                  src={
+                    recipe?.picture?.Location
+                      ? recipe.picture.Location
+                      : "https://www.dentee.com/buy/content/images/thumbs/default-image_450.png"
+                  }
+                  alt="recipeImage"
+                  loading="lazy"
+                  className="rounded-lg w-[20rem] lg:w-[30rem] h-full mx-auto mb-6"
+                />
+              </div>
               <div className="space-y-6 md:space-y-0 md:flex md:gap-6 lg:items-center lg:gap-12">
-                <div className="md:5/12 lg:w-5/12">
-                  <img
-                    src={
-                      recipe?.picture?.Location
-                        ? recipe.picture.Location
-                        : "https://www.dentee.com/buy/content/images/thumbs/default-image_450.png"
-                    }
-                    alt="recipeImage"
-                    loading="lazy"
-                    className="rounded-lg w-[20rem] lg:w-full h-full mx-auto"
-                  />
-                </div>
-                <div className="md:7/12 lg:w-6/12">
+                <div className="md:7/12 lg:w-11/12 mx-auto">
                   <div className="flex flex-col lg:flex-row justify-between items-center">
                     <h2 className="text-2xl text-sky-600 font-bold md:text-4xl font-urban">
                       {recipe?.name}

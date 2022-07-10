@@ -11,6 +11,7 @@ import moment from "moment";
 const Dashboard = () => {
   const [recipes, setRecipes] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const fetchRecipes = async () => {
     try {
       setLoading(true);
@@ -24,6 +25,35 @@ const Dashboard = () => {
       toast.error(err.response.data);
     }
   };
+
+  //Delete reciepe
+  const deleteRecipe = async (slug) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this recipe?"
+    );
+    if (confirm) {
+      try {
+        setDeleting(true);
+        const res = await axiosjwt.post(
+          `${BASE_API_URL}/recipe/delete/${slug}`
+        );
+        toast.success("Deleted successfully");
+        fetchRecipes();
+        setDeleting(false);
+      } catch (err) {
+        setDeleting(false);
+        toast.error("Cannot delete a recipe | Error");
+      }
+    } else {
+      return;
+    }
+  };
+
+  // toast.promise(deleteRecipe(), {
+  //   loading: "Saving...",
+  //   success: <b>Settings saved!</b>,
+  //   error: <b>Could not save.</b>,
+  // });
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -40,7 +70,7 @@ const Dashboard = () => {
             <Link to="/dashboard/recipe/create">
               <button
                 type="button"
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
               >
                 Create Recipe
               </button>
@@ -66,12 +96,13 @@ const Dashboard = () => {
                   <div class="grid grid-cols-6 p-5 gap-y-2">
                     <div>
                       <img
+                        alt="img"
                         src={
                           recipe?.picture?.Location
                             ? recipe.picture.Location
                             : "https://www.dentee.com/buy/content/images/thumbs/default-image_450.png"
                         }
-                        class="max-w-20 max-h-20 rounded-lg"
+                        className="max-w-30 max-h-30 rounded-lg"
                       />
                     </div>
 
@@ -83,14 +114,14 @@ const Dashboard = () => {
 
                       <p class="text-gray-600 font-bold"> {recipe.name}</p>
 
-                      <p class="text-gray-500">
+                      <p class="text-gray-500 text-sm">
                         {" "}
                         {moment(recipe.createdAt).format(
                           "MMM Do YY, h:mm:ss a"
                         )}{" "}
                       </p>
 
-                      <p class="text-gray-500 line-clamp-1">
+                      <p class="text-gray-500 line-clamp-1 text-sm">
                         {" "}
                         {recipe.description}{" "}
                       </p>
@@ -110,10 +141,13 @@ const Dashboard = () => {
                             Update
                           </p>
                         </Link>
-                        <p class="rounded-lg text-red-500 font-bold bg-red-100  py-1 px-3 text-sm w-fit h-fit">
+                        <button
+                          onClick={() => deleteRecipe(recipe.slug)}
+                          class="rounded-lg text-red-500 font-bold bg-red-100  py-1 px-3 text-sm w-fit h-fit"
+                        >
                           {" "}
                           Delete
-                        </p>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -131,8 +165,8 @@ const Dashboard = () => {
                   {" "}
                   OOPS! No recipes. Don't you like cooking?
                 </span>
-                <Link to="">
-                  <button className="bg-sky-600 text-sky-50 font-semibold pl-1 pr-3 py-1 text-sm mt-2 flex justify-center items-center rounded-full">
+                <Link to="/dashboard/recipe/create">
+                  <button className="bg-sky-600 text-sky-50 font-semibold pl-1 pr-3 py-1 text-sm mt-2 flex justify-center items-center rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                     <IoMdAddCircle className="mr-1 w-6 h-6" />
                     Create
                   </button>

@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../Context/Provider";
+import { MdFastfood } from "react-icons/md";
+
 import { BASE_API_URL } from "../Variables/Urls";
 
 const Register = () => {
+  let navigate = useNavigate();
+  const {
+    state: { user },
+    dispatch,
+  } = useContext(Context);
+  //redirect for already logged in user
+  useEffect(() => {
+    if (user !== null) navigate("/dashboard");
+  }, [user]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const registerUser = async () => {
     try {
@@ -17,14 +31,19 @@ const Register = () => {
         return toast.error("Password needs to be atleast 6 charecters");
       if (name.includes("admin" || name.includes("authority")))
         return toast.error("Please enter valid name");
+      setLoading(true);
       const res = await axios.post(`${BASE_API_URL}/register`, {
         name,
         email,
         password,
       });
+      setLoading(false);
+      navigate("/login");
+
       toast.success("Wooho! You have successfuly joined BeZen");
     } catch (err) {
       console.log(err);
+      setLoading(false);
       toast.error(err.response.data);
     }
   };
@@ -32,8 +51,8 @@ const Register = () => {
   return (
     <>
       <div class="container mt-6 mx-auto flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow  sm:px-6 md:px-8 lg:px-10 ">
-        <div class="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl">
-          Register Yourself !
+        <div class="self-center mb-6 text-xl font-semibold text-gray-600 sm:text-2xl">
+          <MdFastfood className="text-yellow-500" /> Register Yourself !
         </div>
         <div class="mt-8">
           <div class="flex flex-col mb-2">
@@ -97,18 +116,16 @@ const Register = () => {
               onClick={registerUser}
               class="py-2 px-4  bg-sky-600 hover:bg-sky-700 focus:ring-sky-500 focus:ring-offset-sky-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
-              Create
+              {loading ? "Please wait..." : "Join Us"}
             </button>
           </div>
         </div>
         <div class="flex items-center justify-center mt-6">
-          <a
-            href="#"
-            target="_blank"
-            class="inline-flex items-center text-xs font-thin text-center text-gray-500 "
-          >
-            <span class="ml-2">Already had an account?</span>
-          </a>
+          <Link to="/login">
+            <span class="ml-2 inline-flex items-center text-xs font-thin text-center text-gray-500">
+              Already had an account?
+            </span>
+          </Link>
         </div>
       </div>
     </>

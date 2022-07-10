@@ -38,6 +38,7 @@ const CreateRecipeForm = ({
                       className=" my-3 w-full md:w-3/4 h-52 mx-auto"
                     />
                     <button
+                      disabled={loading || imgloading}
                       onClick={removeRecipeImage}
                       className="w-full text-center bg-red-50 text-red-500"
                     >
@@ -151,8 +152,9 @@ const CreateRecipeForm = ({
               </button>
               <button
                 type="submit"
+                disabled={loading || imgloading}
                 onClick={createRecipe}
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none "
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
               >
                 Save
               </button>

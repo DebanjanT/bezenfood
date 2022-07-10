@@ -1,9 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../Context/Provider";
 import { BASE_API_URL } from "../Variables/Urls";
+import { MdFastfood } from "react-icons/md";
 const Login = () => {
   let navigate = useNavigate();
   const {
@@ -40,7 +41,7 @@ const Login = () => {
       //saving user_data to local storage
       window.localStorage.setItem("bezenuser", JSON.stringify(res.data));
       setLoading(false);
-      toast.success("omfo,logged in");
+      toast.success("Welcome back ❤️");
     } catch (err) {
       console.log(err);
       toast.error(err.response.data);
@@ -50,8 +51,8 @@ const Login = () => {
   return (
     <>
       <div class="container mt-6 mx-auto flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow  sm:px-6 md:px-8 lg:px-10 ">
-        <div class="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl">
-          Dive into foodzzz
+        <div class="self-center mb-6 text-xl font-semibold text-gray-600 sm:text-2xl">
+          <MdFastfood className="text-yellow-500" /> Dive into foodzz !
         </div>
         <div class="mt-8">
           <div class="flex flex-col mb-2">
@@ -107,13 +108,11 @@ const Login = () => {
           </div>
         </div>
         <div class="flex items-center justify-center mt-6">
-          <a
-            href="#"
-            target="_blank"
-            class="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700 text-gray-100 hover:text-white"
-          >
-            <span class="ml-2">You don&#x27;t have an account?</span>
-          </a>
+          <Link to="/signup">
+            <span class="inline-flex items-center text-xs font-thin text-center text-gray-500 hover:text-gray-700">
+              You don&#x27;t have an account?
+            </span>
+          </Link>
         </div>
       </div>
     </>

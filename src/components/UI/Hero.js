@@ -13,8 +13,8 @@ const Hero = () => {
           share your recipe to the world
         </p>
       </div>
-      <Link to="/dashboard">
-        <button className="mt-6 bg-gradient-to-r from-sky-500 to-teal-500 px-2 py-1 rounded-md text-white font-semibold">
+      <Link to="/signup">
+        <button className="mt-6 bg-gradient-to-r from-sky-500 to-teal-500 px-2 py-1 rounded-md text-white font-semibold text-lg">
           Share Your Recipe
         </button>
       </Link>

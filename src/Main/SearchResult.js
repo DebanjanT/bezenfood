@@ -59,7 +59,11 @@ const SearchResult = () => {
                   <div class="grid grid-cols-6 p-5 gap-y-2">
                     <div>
                       <img
-                        src={recipe?.picture?.Location}
+                        src={
+                          recipe?.picture?.Location
+                            ? recipe.picture.Location
+                            : "https://www.dentee.com/buy/content/images/thumbs/default-image_450.png"
+                        }
                         class="max-w-20 max-h-20 rounded-lg"
                       />
                     </div>

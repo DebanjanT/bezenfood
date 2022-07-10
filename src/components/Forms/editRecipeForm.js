@@ -23,7 +23,7 @@ const UpdateRecipeForm = ({
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
             <h3 className="text-xl font-semibold leading-6 text-sky-600">
-              Update Your Recipe
+              Update {name}
             </h3>
             <p className="mt-1 text-sm text-gray-600">
               Edit your existing recipe
@@ -42,6 +42,7 @@ const UpdateRecipeForm = ({
                       className=" my-3 w-full md:w-3/4 h-52 mx-auto"
                     />
                     <button
+                      disabled={loading || imgloading}
                       onClick={removeRecipeImage}
                       className="w-full text-center bg-red-50 text-red-500"
                     >
@@ -126,7 +127,7 @@ const UpdateRecipeForm = ({
                     type="text"
                     value={rawIngredients}
                     onChange={(e) => addIng(e)}
-                    className="rounded-md flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent mt-2"
+                    className="rounded-md flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent mt-2 focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
                   ></textarea>
                 </div>
 
@@ -159,6 +160,7 @@ const UpdateRecipeForm = ({
               </button>
               <button
                 type="submit"
+                disabled={loading || imgloading}
                 onClick={updateRecipe}
                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none "
               >
