@@ -22,7 +22,7 @@ const EditRecipe = () => {
   const [steps, setSteps] = useState(null);
   const [rawSteps, setRawSteps] = useState(null);
   const [imgPreview, setImgPreview] = useState("");
-  //image state for storing resized image
+  const [imgloading, setImgloading] = useState(false);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -60,6 +60,7 @@ const EditRecipe = () => {
     let user_uploaded_image = e.target.files[0];
     setImgPreview(window.URL.createObjectURL(user_uploaded_image));
     setLoading(true);
+    setImgloading(true);
     //resizing image from client side
     Resizer.imageFileResizer(
       user_uploaded_image,
@@ -79,23 +80,30 @@ const EditRecipe = () => {
           setImage(data);
           // console.log(uploadProgress);
           setLoading(false);
+          setImgloading(false);
           console.log(data);
         } catch (err) {
           console.log(err);
           setLoading(false);
+          setImgloading(false);
           toast.error("Image upload failed! Contact suppot team ❤️");
         }
       }
     );
   };
 
+  /**
+   * Had to comment out api call to aws s3 removing image, its showing access denied error suddenly
+   * Don't know why
+   * I am not remving from s3 just removing from state
+   */
   const removeRecipeImage = async () => {
     try {
-      setLoading(true);
-      const { data } = await axiosjwt.post(
-        `${BASE_API_URL}/recipe/remove/image`,
-        { image }
-      );
+      // setLoading(true);
+      // const { data } = await axiosjwt.post(
+      //   `${BASE_API_URL}/recipe/remove/image`,
+      //   { image }
+      // );
       setImage(null);
       setImgPreview("");
       setLoading(false);
@@ -193,6 +201,7 @@ const EditRecipe = () => {
           name={name}
           description={description}
           updateRecipe={updateRecipe}
+          imgloading={imgloading}
         />
       )}
     </UserWrapper>

@@ -58,15 +58,19 @@ const CreateRecipe = () => {
       }
     );
   };
-
+  /**
+   * Had to comment out api call to aws s3 removing image, its showing access denied error suddenly
+   * Don't know why
+   * I am not remving from s3 just removing from state
+   */
   const removeRecipeImage = async () => {
     try {
-      setLoading(true);
-      setImgloading(true);
-      const { data } = await axiosjwt.post(
-        `${BASE_API_URL}/recipe/remove/image`,
-        { image }
-      );
+      // setLoading(true);
+      // setImgloading(true);
+      // const { data } = await axiosjwt.post(
+      //   `${BASE_API_URL}/recipe/remove/image`,
+      //   { image }
+      // );
       setImage(null);
       setImgPreview("");
       setLoading(false);

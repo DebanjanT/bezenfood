@@ -1,5 +1,6 @@
 import React from "react";
 import { FcAddImage } from "react-icons/fc";
+import { ImSpinner } from "react-icons/im";
 const UpdateRecipeForm = ({
   imgPreview,
   removeRecipeImage,
@@ -14,6 +15,7 @@ const UpdateRecipeForm = ({
   rawSteps,
   rawIngredients,
   updateRecipe,
+  imgloading,
 }) => {
   return (
     <div className="mt-10 sm:mt-8 lg:container lg:mx-auto mb-10">
@@ -72,7 +74,12 @@ const UpdateRecipeForm = ({
                 </>
               )}
 
-              {loading && "Loading..."}
+              {imgloading && (
+                <div className="flex justify-start items-center ml-2 my-3">
+                  <ImSpinner className="animate-spin h-6 w-6 mr-2 text-sky-500" />
+                  Image handling...
+                </div>
+              )}
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
                   <label
